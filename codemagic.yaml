@@ -1,0 +1,76 @@
+workflows:
+  ios-release:
+    name: iOS Release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store   # cambia a 'ad_hoc' si quieres IPA sin App Store
+        bundle_identifier: com.gimothy.gimothy
+
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: Flutter build iOS
+        script: |
+          flutter build ios --release --no-codesign
+
+      - name: Set up code signing & build IPA
+        script: |
+          xcode-project use-profiles
+          xcode-project build-ipa \
+            --workspace ios/Runner.xcworkspace \
+            --scheme Runner
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
+    publishing:
+      email:
+        recipients:
+          - your@email.com      # ← pon tu email aquí
+        notify:
+          success: true
+          failure: true
+
+  ios-debug:
+    name: iOS Debug (Simulator)
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: Analyze
+        script: flutter analyze --no-fatal-infos
+
+      - name: Build iOS debug (no codesign)
+        script: flutter build ios --debug --no-codesign
+
+    artifacts:
+      - build/ios/iphonesimulator/*.app
