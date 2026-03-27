@@ -1,6 +1,14 @@
 workflows:
-  ios-release:
-    name: iOS Release
+
+  # ─────────────────────────────────────────────────────────────────
+  # Release iOS con Shorebird (App Store / TestFlight)
+  # Requiere en Codemagic Console:
+  #   - SHOREBIRD_TOKEN  (Variables de entorno)
+  #   - Certificado de distribución + perfil de aprovisionamiento
+  #     en Team > Apple Developer Portal integration
+  # ─────────────────────────────────────────────────────────────────
+  ios-shorebird-release:
+    name: iOS Release (Shorebird)
     max_build_duration: 60
     instance_type: mac_mini_m2
 
@@ -9,45 +17,51 @@ workflows:
       xcode: latest
       cocoapods: default
       ios_signing:
-        distribution_type: app_store   # cambia a 'ad_hoc' si quieres IPA sin App Store
+        distribution_type: app_store
         bundle_identifier: com.gimothy.gimothy
+      vars:
+        BUNDLE_ID: com.gimothy.gimothy
+      groups:
+        - shorebird  # grupo con SHOREBIRD_TOKEN en Codemagic Console
 
     scripts:
-      - name: Get Flutter packages
+      - name: Instalar Shorebird
+        script: |
+          curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+          echo 'export PATH="$HOME/.shorebird/bin:$PATH"' >> $CM_ENV
+          export PATH="$HOME/.shorebird/bin:$PATH"
+          shorebird --version
+
+      - name: Flutter pub get
         script: flutter pub get
 
-      - name: Install CocoaPods
+      - name: Instalar CocoaPods
         script: |
-          cd ios
-          pod install
-          cd ..
+          cd ios && pod install --repo-update && cd ..
 
-      - name: Flutter build iOS
-        script: |
-          flutter build ios --release --no-codesign
+      - name: Configurar firma de código
+        script: xcode-project use-profiles
 
-      - name: Set up code signing & build IPA
+      - name: Shorebird release iOS
         script: |
-          xcode-project use-profiles
-          xcode-project build-ipa \
-            --workspace ios/Runner.xcworkspace \
-            --scheme Runner
+          export PATH="$HOME/.shorebird/bin:$PATH"
+          shorebird release ios \
+            --export-options-plist /Users/builder/export_options.plist
 
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
 
     publishing:
-      email:
-        recipients:
-          - your@email.com      # ← pon tu email aquí
-        notify:
-          success: true
-          failure: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
 
+  # ─────────────────────────────────────────────────────────────────
+  # Build de debug sin firma (para verificar que compila)
+  # ─────────────────────────────────────────────────────────────────
   ios-debug:
-    name: iOS Debug (Simulator)
+    name: iOS Debug (sin firma)
     max_build_duration: 30
     instance_type: mac_mini_m2
 
@@ -57,20 +71,53 @@ workflows:
       cocoapods: default
 
     scripts:
-      - name: Get Flutter packages
+      - name: Flutter pub get
         script: flutter pub get
 
-      - name: Install CocoaPods
+      - name: Instalar CocoaPods
         script: |
-          cd ios
-          pod install
-          cd ..
+          cd ios && pod install --repo-update && cd ..
 
-      - name: Analyze
+      - name: Analizar código
         script: flutter analyze --no-fatal-infos
 
-      - name: Build iOS debug (no codesign)
+      - name: Build iOS debug (sin firma)
         script: flutter build ios --debug --no-codesign
 
     artifacts:
       - build/ios/iphonesimulator/*.app
+
+  # ─────────────────────────────────────────────────────────────────
+  # Patch Shorebird (actualización OTA sin pasar por App Store)
+  # Usar después de un release ya publicado
+  # ─────────────────────────────────────────────────────────────────
+  ios-shorebird-patch:
+    name: iOS Patch (Shorebird OTA)
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - shorebird  # grupo con SHOREBIRD_TOKEN en Codemagic Console
+
+    scripts:
+      - name: Instalar Shorebird
+        script: |
+          curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+          echo 'export PATH="$HOME/.shorebird/bin:$PATH"' >> $CM_ENV
+          export PATH="$HOME/.shorebird/bin:$PATH"
+
+      - name: Flutter pub get
+        script: flutter pub get
+
+      - name: Instalar CocoaPods
+        script: |
+          cd ios && pod install && cd ..
+
+      - name: Shorebird patch iOS
+        script: |
+          export PATH="$HOME/.shorebird/bin:$PATH"
+          shorebird patch ios
