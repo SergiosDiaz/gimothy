@@ -29,9 +29,24 @@ migrate_working_dir/
 .dart_tool/
 .flutter-plugins-dependencies
 .pub-cache/
+# Mantener .flutter-plugins para que CocoaPods sepa qué plugins instalar
+# (NO excluir .flutter-plugins)
 .pub/
 /build/
 /coverage/
+
+# iOS - generados automáticamente (NO excluir Podfile)
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/flutter_assets/
+
+# Xcworkspace generado por CocoaPods (usar el del proyecto, no el de pods)
+ios/Runner.xcworkspace/xcshareddata/swiftpm/
 
 # Symbolication related
 app.*.symbols
