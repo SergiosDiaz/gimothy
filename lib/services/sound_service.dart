@@ -13,6 +13,18 @@ class SoundService {
   MoanType get currentType => _currentType;
 
   Future<void> init() async {
+    await AudioPlayer.global.setAudioContext(
+      AudioContext(
+        android: const AudioContextAndroid(
+          audioFocus: AndroidAudioFocus.gainTransientMayDuck,
+          usageType: AndroidUsageType.media,
+          contentType: AndroidContentType.music,
+        ),
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.playback,
+        ),
+      ),
+    );
     await _player.setVolume(1.0);
   }
 
@@ -28,15 +40,15 @@ class SoundService {
   String _assetPath(MoanType type) {
     switch (type) {
       case MoanType.suave:
-        return 'assets/sounds/suave.mp3';
+        return 'sounds/suave.mp3';
       case MoanType.intenso:
-        return 'assets/sounds/intenso.mp3';
+        return 'sounds/intenso.mp3';
       case MoanType.dramatico:
-        return 'assets/sounds/dramatico.mp3';
+        return 'sounds/dramatico.mp3';
       case MoanType.timido:
-        return 'assets/sounds/timido.mp3';
+        return 'sounds/timido.mp3';
       case MoanType.robusto:
-        return 'assets/sounds/robusto.mp3';
+        return 'sounds/robusto.mp3';
     }
   }
 
