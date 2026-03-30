@@ -60,6 +60,11 @@ flutter:
   # the material Icons class.
   assets:
     - shorebird.yaml
+    - assets/sounds/suave.mp3
+    - assets/sounds/intenso.mp3
+    - assets/sounds/dramatico.mp3
+    - assets/sounds/timido.mp3
+    - assets/sounds/robusto.mp3
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

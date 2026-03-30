@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ShakeDetector {
-  static const double _shakeThreshold = 18.0;
-  static const int _cooldownMs = 600;
+  static const double _shakeThreshold = 8.0;
+  static const int _cooldownMs = 400;
 
   final VoidCallback onShake;
   StreamSubscription<AccelerometerEvent>? _subscription;
