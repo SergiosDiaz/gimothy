@@ -4,12 +4,19 @@ import 'dart:math';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ShakeDetector {
-  static const double _shakeThreshold = 8.0;
-  static const int _cooldownMs = 400;
+  // Umbral para considerar que empieza un impacto
+  static const double _peakThreshold = 10.0;
+  // Si baja de este valor, el impacto ha terminado
+  static const double _decayThreshold = 6.0;
+  // Si el pico dura más de esto, es una agitación (no un golpe)
+  static const int _maxSlapDurationMs = 220;
+  static const int _cooldownMs = 450;
 
   final VoidCallback onShake;
   StreamSubscription<AccelerometerEvent>? _subscription;
-  DateTime? _lastShake;
+  DateTime? _lastSlap;
+  DateTime? _spikeStart;
+  bool _inSpike = false;
 
   ShakeDetector({required this.onShake});
 
@@ -24,13 +31,28 @@ class ShakeDetector {
       event.x * event.x + event.y * event.y + event.z * event.z,
     );
     final net = (magnitude - 9.81).abs();
+    final now = DateTime.now();
 
-    if (net > _shakeThreshold) {
-      final now = DateTime.now();
-      if (_lastShake == null ||
-          now.difference(_lastShake!).inMilliseconds > _cooldownMs) {
-        _lastShake = now;
-        onShake();
+    if (!_inSpike && net > _peakThreshold) {
+      // Comienza un pico de aceleración
+      _inSpike = true;
+      _spikeStart = now;
+    } else if (_inSpike) {
+      final spikeDuration = now.difference(_spikeStart!).inMilliseconds;
+
+      if (net < _decayThreshold) {
+        // El pico bajó rápido → es un golpe
+        if (spikeDuration < _maxSlapDurationMs) {
+          if (_lastSlap == null ||
+              now.difference(_lastSlap!).inMilliseconds > _cooldownMs) {
+            _lastSlap = now;
+            onShake();
+          }
+        }
+        _inSpike = false;
+      } else if (spikeDuration > _maxSlapDurationMs) {
+        // El pico se sostiene demasiado → es una agitación, ignorar
+        _inSpike = false;
       }
     }
   }
@@ -38,6 +60,8 @@ class ShakeDetector {
   void stop() {
     _subscription?.cancel();
     _subscription = null;
+    _inSpike = false;
+    _spikeStart = null;
   }
 }
 

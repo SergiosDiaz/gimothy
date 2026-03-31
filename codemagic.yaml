@@ -18,7 +18,11 @@ workflows:
       cocoapods: default
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.gimothy.gimothy
+        # bundle_identifiers cubre tanto la app iOS como el Watch companion.
+        # Codemagic fetcha ambos perfiles desde App Store Connect automáticamente.
+        bundle_identifiers:
+          - com.gimothy.gimothy
+          - com.gimothy.gimothy.watchkitapp
       vars:
         BUNDLE_ID: com.gimothy.gimothy
       groups:
@@ -34,6 +38,11 @@ workflows:
 
       - name: Flutter pub get
         script: flutter pub get
+
+      - name: Generar proyecto Xcode con XcodeGen (iOS + watchOS)
+        script: |
+          brew install xcodegen
+          cd ios && xcodegen generate
 
       - name: Instalar CocoaPods
         script: |
@@ -74,6 +83,11 @@ workflows:
       - name: Flutter pub get
         script: flutter pub get
 
+      - name: Generar proyecto Xcode con XcodeGen (iOS + watchOS)
+        script: |
+          brew install xcodegen
+          cd ios && xcodegen generate
+
       - name: Instalar CocoaPods
         script: |
           cd ios && pod install --repo-update && cd ..
@@ -112,6 +126,11 @@ workflows:
 
       - name: Flutter pub get
         script: flutter pub get
+
+      - name: Generar proyecto Xcode con XcodeGen (iOS + watchOS)
+        script: |
+          brew install xcodegen
+          cd ios && xcodegen generate
 
       - name: Instalar CocoaPods
         script: |

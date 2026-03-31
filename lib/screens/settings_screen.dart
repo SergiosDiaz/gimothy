@@ -26,7 +26,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _soundService.setMoanType(type);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('moan_type', type.index);
-    await _soundService.playMoan();
   }
 
   @override
@@ -87,16 +86,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onTap: () => _selectType(type),
                     );
                   },
-                ),
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: Text(
-                  'Toca una opción para escuchar una muestra',
-                  style: TextStyle(
-                    color: Colors.white24,
-                    fontSize: 12,
-                  ),
                 ),
               ),
             ],

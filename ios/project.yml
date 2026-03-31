@@ -1,0 +1,247 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  project.yml  —  XcodeGen spec para Gimothy (iOS + watchOS)
+#
+#  Uso (requiere macOS):
+#    1. brew install xcodegen          # instalar XcodeGen
+#    2. cd ios
+#    3. xcodegen generate              # regenera Runner.xcodeproj
+#    4. pod install                    # restaura CocoaPods
+#    5. open Runner.xcworkspace
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Runner
+
+options:
+  xcodeVersion: "15.1"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  deploymentTarget:
+    iOS: "13.0"
+    watchOS: "7.0"
+
+# Las tres configuraciones que Flutter necesita obligatoriamente
+configs:
+  Debug:   debug
+  Release: release
+  Profile: release   # Profile usa ajustes de Release
+
+# ─── Ajustes a nivel de proyecto (espejo del project.pbxproj original) ───────
+settings:
+  base:
+    ALWAYS_SEARCH_USER_PATHS: NO
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+    CLANG_ANALYZER_NONNULL: YES
+    CLANG_CXX_LANGUAGE_STANDARD: "gnu++0x"
+    CLANG_CXX_LIBRARY: "libc++"
+    CLANG_ENABLE_MODULES: YES
+    CLANG_ENABLE_OBJC_ARC: YES
+    CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: YES
+    CLANG_WARN_BOOL_CONVERSION: YES
+    CLANG_WARN_COMMA: YES
+    CLANG_WARN_CONSTANT_CONVERSION: YES
+    CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: YES
+    CLANG_WARN_DIRECT_OBJC_ISA_USAGE: YES_ERROR
+    CLANG_WARN_EMPTY_BODY: YES
+    CLANG_WARN_ENUM_CONVERSION: YES
+    CLANG_WARN_INFINITE_RECURSION: YES
+    CLANG_WARN_INT_CONVERSION: YES
+    CLANG_WARN_NON_LITERAL_NULL_CONVERSION: YES
+    CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF: YES
+    CLANG_WARN_OBJC_LITERAL_CONVERSION: YES
+    CLANG_WARN_OBJC_ROOT_CLASS: YES_ERROR
+    CLANG_WARN_RANGE_LOOP_ANALYSIS: YES
+    CLANG_WARN_STRICT_PROTOTYPES: YES
+    CLANG_WARN_SUSPICIOUS_MOVE: YES
+    CLANG_WARN_UNREACHABLE_CODE: YES
+    CLANG_WARN__DUPLICATE_METHOD_MATCH: YES
+    COPY_PHASE_STRIP: NO
+    ENABLE_STRICT_OBJC_MSGSEND: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    GCC_C_LANGUAGE_STANDARD: gnu99
+    GCC_NO_COMMON_BLOCKS: YES
+    GCC_WARN_64_TO_32_BIT_CONVERSION: YES
+    GCC_WARN_ABOUT_RETURN_TYPE: YES_ERROR
+    GCC_WARN_UNDECLARED_SELECTOR: YES
+    GCC_WARN_UNINITIALIZED_AUTOS: YES_AGGRESSIVE
+    GCC_WARN_UNUSED_FUNCTION: YES
+    GCC_WARN_UNUSED_VARIABLE: YES
+    IPHONEOS_DEPLOYMENT_TARGET: "13.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+  configs:
+    Debug:
+      DEBUG_INFORMATION_FORMAT: dwarf
+      ENABLE_TESTABILITY: YES
+      GCC_DYNAMIC_NO_PIC: NO
+      GCC_OPTIMIZATION_LEVEL: "0"
+      GCC_PREPROCESSOR_DEFINITIONS:
+        - "DEBUG=1"
+        - "$(inherited)"
+      MTL_ENABLE_DEBUG_INFO: YES
+      ONLY_ACTIVE_ARCH: YES
+    Release:
+      DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
+      ENABLE_NS_ASSERTIONS: NO
+      MTL_ENABLE_DEBUG_INFO: NO
+      SDKROOT: iphoneos
+      SUPPORTED_PLATFORMS: iphoneos
+      VALIDATE_PRODUCT: YES
+    Profile:
+      DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
+      ENABLE_NS_ASSERTIONS: NO
+      MTL_ENABLE_DEBUG_INFO: NO
+      SDKROOT: iphoneos
+      SUPPORTED_PLATFORMS: iphoneos
+      VALIDATE_PRODUCT: YES
+
+# ─────────────────────────────────────────────────────────────────────────────
+targets:
+
+  # ─── iOS App — Flutter Runner ─────────────────────────────────────────────
+  Runner:
+    type: application
+    platform: iOS
+    deploymentTarget: "13.0"
+
+    sources:
+      - path: Runner
+        excludes:
+          - Info.plist   # XcodeGen no debe tratar el Info.plist como fuente
+
+    # Las xcconfigs de Flutter inyectan FLUTTER_ROOT, SDK paths, etc.
+    configFiles:
+      Debug:   Flutter/Debug.xcconfig
+      Release: Flutter/Release.xcconfig
+      Profile: Flutter/Release.xcconfig
+
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        "CODE_SIGN_IDENTITY[sdk=iphoneos*]": "iPhone Developer"
+        CODE_SIGN_STYLE: Automatic
+        CURRENT_PROJECT_VERSION: "$(FLUTTER_BUILD_NUMBER)"
+        ENABLE_BITCODE: NO
+        INFOPLIST_FILE: Runner/Info.plist
+        LD_RUNPATH_SEARCH_PATHS:
+          - "$(inherited)"
+          - "@executable_path/Frameworks"
+        PRODUCT_BUNDLE_IDENTIFIER: com.gimothy.gimothy
+        PRODUCT_NAME: "$(TARGET_NAME)"
+        SWIFT_OBJC_BRIDGING_HEADER: "Runner/Runner-Bridging-Header.h"
+        SWIFT_VERSION: "5.0"
+        VERSIONING_SYSTEM: apple-generic
+      configs:
+        Debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+        Release:
+          SWIFT_COMPILATION_MODE: wholemodule
+          SWIFT_OPTIMIZATION_LEVEL: "-O"
+        Profile:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+
+    # Incrusta el Watch app como companion bundle dentro de Runner.app/Watch/
+    dependencies:
+      - target: GimothyWatch
+        embed: true
+        codeSign: true
+
+    # Script de Flutter que PRECEDE a compilación (Run Script)
+    preBuildScripts:
+      - name: "Run Script"
+        script: |
+          /bin/sh "$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh" build
+        shell: /bin/sh
+        alwaysOutOfDate: true
+
+    # Script de Flutter que SIGUE a todo (Thin Binary / embed_and_thin)
+    postBuildScripts:
+      - name: "Thin Binary"
+        script: |
+          /bin/sh "$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh" embed_and_thin
+        shell: /bin/sh
+        alwaysOutOfDate: true
+        inputFiles:
+          - "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
+
+  # ─── Tests del Runner ─────────────────────────────────────────────────────
+  RunnerTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "13.0"
+
+    sources:
+      - path: RunnerTests
+
+    settings:
+      base:
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        CODE_SIGN_STYLE: Automatic
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        MARKETING_VERSION: "1.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.gimothy.gimothy.RunnerTests
+        PRODUCT_NAME: "$(TARGET_NAME)"
+        SWIFT_VERSION: "5.0"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner"
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+        Release:
+          SWIFT_OPTIMIZATION_LEVEL: "-O"
+        Profile:
+          SWIFT_OPTIMIZATION_LEVEL: "-O"
+
+    dependencies:
+      - target: Runner
+
+  # ─── watchOS Standalone App ───────────────────────────────────────────────
+  GimothyWatch:
+    type: application
+    platform: watchOS
+    deploymentTarget: "7.0"
+
+    sources:
+      # Código Swift + Assets.xcassets del Watch target
+      - path: "GimothyWatch Watch App"
+        excludes:
+          - Info.plist
+
+      # Los 5 sonidos de Flutter reutilizados directamente en el bundle del Watch.
+      # Se referencian desde su ubicación original para no duplicar archivos.
+      # Bundle.main en watchOS apunta al bundle de la Watch app, por lo que
+      # los mp3 estarán disponibles en la raíz del bundle.
+      - path: ../assets/sounds/suave.mp3
+        buildPhase: resources
+      - path: ../assets/sounds/intenso.mp3
+        buildPhase: resources
+      - path: ../assets/sounds/dramatico.mp3
+        buildPhase: resources
+      - path: ../assets/sounds/timido.mp3
+        buildPhase: resources
+      - path: ../assets/sounds/robusto.mp3
+        buildPhase: resources
+
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+        CODE_SIGN_STYLE: Automatic
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_FILE: "GimothyWatch Watch App/Info.plist"
+        MARKETING_VERSION: "1.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.gimothy.gimothy.watchkitapp
+        PRODUCT_NAME: GimothyWatch
+        SDKROOT: watchos
+        SUPPORTED_PLATFORMS: "watchos watchsimulator"
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "4"   # Override del "1,2" del proyecto
+        WATCHOS_DEPLOYMENT_TARGET: "7.0"
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+        Release:
+          SWIFT_COMPILATION_MODE: wholemodule
+          SWIFT_OPTIMIZATION_LEVEL: "-O"
+        Profile:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
