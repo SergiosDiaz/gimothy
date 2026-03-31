@@ -236,6 +236,9 @@ targets:
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "4"   # Override del "1,2" del proyecto
         WATCHOS_DEPLOYMENT_TARGET: "7.0"
+        # CRÍTICO: con YES, el Watch app NO se archiva por separado sino que
+        # se embebe dentro de Runner.app/Watch/ → queda en el .ipa de iOS.
+        SKIP_INSTALL: YES
       configs:
         Debug:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
@@ -245,3 +248,27 @@ targets:
           SWIFT_OPTIMIZATION_LEVEL: "-O"
         Profile:
           SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Esquema explícito: fuerza a Xcode a compilar GimothyWatch cuando se
+# construye el esquema Runner (necesario para que quede embebido en el .ipa).
+# ─────────────────────────────────────────────────────────────────────────────
+schemes:
+  Runner:
+    build:
+      targets:
+        Runner:       all
+        GimothyWatch: all
+        RunnerTests:  [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - RunnerTests
+    profile:
+      config: Profile
+    analyze:
+      config: Debug
+    archive:
+      config: Release

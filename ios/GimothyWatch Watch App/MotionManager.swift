@@ -18,10 +18,10 @@ final class MotionManager: ObservableObject {
     private let sampleInterval: TimeInterval = 0.02
 
     /// Umbral mínimo de aceleración para considerar un golpe (en g)
-    private let shakeThreshold: Double = 1.8
+    private let shakeThreshold: Double = 1.2
 
     /// Tiempo mínimo entre dos golpes consecutivos
-    private let cooldown: TimeInterval = 1.2
+    private let cooldown: TimeInterval = 0.8
 
     private var lastShakeDate: Date = .distantPast
 
@@ -69,10 +69,10 @@ final class MotionManager: ObservableObject {
     /// Mapea la intensidad del golpe a uno de los cinco sonidos de Gimothy
     private func classify(excess: Double) -> String {
         switch excess {
-        case ..<2.2:  return "timido"
-        case ..<3.0:  return "suave"
-        case ..<4.2:  return "intenso"
-        case ..<5.5:  return "robusto"
+        case ..<1.7:  return "timido"
+        case ..<2.4:  return "suave"
+        case ..<3.4:  return "intenso"
+        case ..<4.5:  return "robusto"
         default:      return "dramatico"
         }
     }

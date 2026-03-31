@@ -5,12 +5,12 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 class ShakeDetector {
   // Umbral para considerar que empieza un impacto
-  static const double _peakThreshold = 10.0;
+  static const double _peakThreshold = 6.5;
   // Si baja de este valor, el impacto ha terminado
-  static const double _decayThreshold = 6.0;
+  static const double _decayThreshold = 3.5;
   // Si el pico dura más de esto, es una agitación (no un golpe)
   static const int _maxSlapDurationMs = 220;
-  static const int _cooldownMs = 450;
+  static const int _cooldownMs = 300;
 
   final VoidCallback onShake;
   StreamSubscription<AccelerometerEvent>? _subscription;

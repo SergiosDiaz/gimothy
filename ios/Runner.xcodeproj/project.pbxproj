@@ -15,6 +15,17 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		AA000010000000000000030A /* GimothyWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000010A /* GimothyWatchApp.swift */; };
+		AA000010000000000000031A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000011A /* ContentView.swift */; };
+		AA000010000000000000032A /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000012A /* MotionManager.swift */; };
+		AA000010000000000000033A /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000013A /* SoundManager.swift */; };
+		AA000010000000000000034A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000014A /* Assets.xcassets */; };
+		AA000010000000000000035A /* suave.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000020A /* suave.mp3 */; };
+		AA000010000000000000036A /* intenso.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000021A /* intenso.mp3 */; };
+		AA000010000000000000037A /* dramatico.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000022A /* dramatico.mp3 */; };
+		AA000010000000000000038A /* timido.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000023A /* timido.mp3 */; };
+		AA000010000000000000039A /* robusto.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA000010000000000000024A /* robusto.mp3 */; };
+		AA000010000000000000040A /* GimothyWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = AA000010000000000000001A /* GimothyWatch.app */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +35,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 97C146ED1CF9000F007C117D;
 			remoteInfo = Runner;
+		};
+		AA000010000000000000006A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA000010000000000000002A;
+			remoteInfo = GimothyWatch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -36,6 +54,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000010000000000000070A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				AA000010000000000000040A /* GimothyWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -57,10 +86,29 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA000010000000000000001A /* GimothyWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GimothyWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000010000000000000010A /* GimothyWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GimothyWatchApp.swift; sourceTree = "<group>"; };
+		AA000010000000000000011A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AA000010000000000000012A /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
+		AA000010000000000000013A /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		AA000010000000000000014A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA000010000000000000015A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA000010000000000000020A /* suave.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = suave.mp3; path = "../assets/sounds/suave.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000021A /* intenso.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = intenso.mp3; path = "../assets/sounds/intenso.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000022A /* dramatico.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dramatico.mp3; path = "../assets/sounds/dramatico.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000023A /* timido.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = timido.mp3; path = "../assets/sounds/timido.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000024A /* robusto.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = robusto.mp3; path = "../assets/sounds/robusto.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		97C146EB1CF9000F007C117D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000010000000000000005A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -96,6 +144,7 @@
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
+				AA000010000000000000050A /* GimothyWatch Watch App */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,8 +153,27 @@
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
+				AA000010000000000000001A /* GimothyWatch.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AA000010000000000000050A /* GimothyWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				AA000010000000000000010A /* GimothyWatchApp.swift */,
+				AA000010000000000000011A /* ContentView.swift */,
+				AA000010000000000000012A /* MotionManager.swift */,
+				AA000010000000000000013A /* SoundManager.swift */,
+				AA000010000000000000014A /* Assets.xcassets */,
+				AA000010000000000000015A /* Info.plist */,
+				AA000010000000000000020A /* suave.mp3 */,
+				AA000010000000000000021A /* intenso.mp3 */,
+				AA000010000000000000022A /* dramatico.mp3 */,
+				AA000010000000000000023A /* timido.mp3 */,
+				AA000010000000000000024A /* robusto.mp3 */,
+			);
+			path = "GimothyWatch Watch App";
 			sourceTree = "<group>";
 		};
 		97C146F01CF9000F007C117D /* Runner */ = {
@@ -153,15 +221,34 @@
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
+				AA000010000000000000070A /* Embed Watch Content */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AA000010000000000000007A /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA000010000000000000002A /* GimothyWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000010000000000000063A /* Build configuration list for PBXNativeTarget "GimothyWatch" */;
+			buildPhases = (
+				AA000010000000000000003A /* Sources */,
+				AA000010000000000000005A /* Frameworks */,
+				AA000010000000000000004A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GimothyWatch;
+			productName = GimothyWatch;
+			productReference = AA000010000000000000001A /* GimothyWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,6 +269,9 @@
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 1100;
 					};
+					AA000010000000000000002A = {
+						CreatedOnToolsVersion = 15.1;
+					};
 				};
 			};
 			buildConfigurationList = 97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */;
@@ -199,6 +289,7 @@
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
 				331C8080294A63A400263BE5 /* RunnerTests */,
+				AA000010000000000000002A /* GimothyWatch */,
 			);
 		};
 /* End PBXProject section */
@@ -219,6 +310,19 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000010000000000000004A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000010000000000000034A /* Assets.xcassets in Resources */,
+				AA000010000000000000035A /* suave.mp3 in Resources */,
+				AA000010000000000000036A /* intenso.mp3 in Resources */,
+				AA000010000000000000037A /* dramatico.mp3 in Resources */,
+				AA000010000000000000038A /* timido.mp3 in Resources */,
+				AA000010000000000000039A /* robusto.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +381,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA000010000000000000003A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000010000000000000030A /* GimothyWatchApp.swift in Sources */,
+				AA000010000000000000031A /* ContentView.swift in Sources */,
+				AA000010000000000000032A /* MotionManager.swift in Sources */,
+				AA000010000000000000033A /* SoundManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -284,6 +399,11 @@
 			isa = PBXTargetDependency;
 			target = 97C146ED1CF9000F007C117D /* Runner */;
 			targetProxy = 331C8085294A63A400263BE5 /* PBXContainerItemProxy */;
+		};
+		AA000010000000000000007A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA000010000000000000002A /* GimothyWatch */;
+			targetProxy = AA000010000000000000006A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -584,6 +704,74 @@
 			};
 			name = Release;
 		};
+		AA000010000000000000060A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "GimothyWatch Watch App/Info.plist";
+				MARKETING_VERSION = "1.0";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gimothy.gimothy.watchkitapp;
+				PRODUCT_NAME = GimothyWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = "4";
+				WATCHOS_DEPLOYMENT_TARGET = "7.0";
+			};
+			name = Debug;
+		};
+		AA000010000000000000061A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "GimothyWatch Watch App/Info.plist";
+				MARKETING_VERSION = "1.0";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gimothy.gimothy.watchkitapp;
+				PRODUCT_NAME = GimothyWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = "4";
+				WATCHOS_DEPLOYMENT_TARGET = "7.0";
+			};
+			name = Release;
+		};
+		AA000010000000000000062A /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "GimothyWatch Watch App/Info.plist";
+				MARKETING_VERSION = "1.0";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gimothy.gimothy.watchkitapp;
+				PRODUCT_NAME = GimothyWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = "4";
+				WATCHOS_DEPLOYMENT_TARGET = "7.0";
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -613,6 +801,16 @@
 				97C147061CF9000F007C117D /* Debug */,
 				97C147071CF9000F007C117D /* Release */,
 				249021D4217E4FDB00AE95B9 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000010000000000000063A /* Build configuration list for PBXNativeTarget "GimothyWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000010000000000000060A /* Debug */,
+				AA000010000000000000061A /* Release */,
+				AA000010000000000000062A /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -20,8 +20,12 @@
     <string>$(MARKETING_VERSION)</string>
     <key>CFBundleVersion</key>
     <string>$(CURRENT_PROJECT_VERSION)</string>
-    <!-- Marca esta app como standalone watchOS app (watchOS 7+) -->
+    <!-- App watchOS independiente (no requiere la app iOS para funcionar) -->
     <key>WKApplication</key>
     <true/>
+    <!-- Vincula esta Watch app con la app iOS padre en App Store Connect.
+         Necesario para que Apple la asocie al mismo bundle en TestFlight. -->
+    <key>WKCompanionAppBundleIdentifier</key>
+    <string>com.gimothy.gimothy</string>
 </dict>
 </plist>
