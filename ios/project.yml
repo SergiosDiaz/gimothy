@@ -198,7 +198,7 @@ targets:
   GimothyWatch:
     type: application
     platform: watchOS
-    deploymentTarget: "7.0"
+    deploymentTarget: "10.0"
 
     sources:
       # Código Swift + Assets.xcassets del Watch target
@@ -235,7 +235,7 @@ targets:
         SUPPORTED_PLATFORMS: "watchos watchsimulator"
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "4"   # Override del "1,2" del proyecto
-        WATCHOS_DEPLOYMENT_TARGET: "7.0"
+        WATCHOS_DEPLOYMENT_TARGET: "10.0"
         # CRÍTICO: con YES, el Watch app NO se archiva por separado sino que
         # se embebe dentro de Runner.app/Watch/ → queda en el .ipa de iOS.
         SKIP_INSTALL: YES
