@@ -93,11 +93,11 @@
 		AA000010000000000000013A /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		AA000010000000000000014A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA000010000000000000015A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA000010000000000000020A /* suave.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = suave.mp3; path = "../assets/sounds/suave.mp3"; sourceTree = "<group>"; };
-		AA000010000000000000021A /* intenso.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = intenso.mp3; path = "../assets/sounds/intenso.mp3"; sourceTree = "<group>"; };
-		AA000010000000000000022A /* dramatico.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dramatico.mp3; path = "../assets/sounds/dramatico.mp3"; sourceTree = "<group>"; };
-		AA000010000000000000023A /* timido.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = timido.mp3; path = "../assets/sounds/timido.mp3"; sourceTree = "<group>"; };
-		AA000010000000000000024A /* robusto.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = robusto.mp3; path = "../assets/sounds/robusto.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000020A /* suave.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = suave.mp3; path = "../../assets/sounds/suave.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000021A /* intenso.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = intenso.mp3; path = "../../assets/sounds/intenso.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000022A /* dramatico.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dramatico.mp3; path = "../../assets/sounds/dramatico.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000023A /* timido.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = timido.mp3; path = "../../assets/sounds/timido.mp3"; sourceTree = "<group>"; };
+		AA000010000000000000024A /* robusto.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = robusto.mp3; path = "../../assets/sounds/robusto.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
